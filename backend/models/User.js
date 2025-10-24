@@ -41,7 +41,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         // Restricts the 'role' field to only these values
-        enum: ['student', 'mess', 'admin', 'warden'],
+        enum: ['student', 'mess', 'warden'],
         default: 'student'  // Automatically sets new users to 'student'
     }
 }, { timestamps: true }); // Automatically adds 'createdAt' and 'updatedAt' fields

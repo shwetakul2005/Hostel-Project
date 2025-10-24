@@ -11,7 +11,7 @@ const signupVal = (req,res,next)=>{
             'string.pattern.base': 'Please enter a valid 10-digit mobile number'
         }),
         password: Joi.string().min(6).required(),
-        role: Joi.string().valid('student', 'mess', 'admin', 'warden').required()
+        role: Joi.string().valid('student', 'mess', 'warden').required()
     });
     const {error}=schema.validate(req.body);
     if(error){ //if the data is invalid, immediately sends an error, before the main controller is even hit

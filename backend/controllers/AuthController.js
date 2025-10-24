@@ -51,7 +51,8 @@ const login = async (req,res)=>{
         }
         const payload={
             id: user._id,
-            username: user.username            
+            username: user.username,
+            role: user.role            
         }
         const jwtToken=jwt.sign( //so that the user doesn't need to prove their identity on every request
             payload,
