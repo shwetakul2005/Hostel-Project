@@ -7,7 +7,7 @@ import './Login.css';
 import loginBgImage from '../assets/hostel-2.jpeg'; 
 
 function LoginPage() {
-    const [formData, setFormData] = useState({
+    const [loginInfo, setLoginInfo] = useState({
         role: 'student', 
         username: '',
         password: '',

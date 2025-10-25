@@ -17,6 +17,7 @@ const signupVal = (req,res,next)=>{
     if(error){ //if the data is invalid, immediately sends an error, before the main controller is even hit
         return res.status(400).json({ message: error.details[0].message })
     }
+    // console.log("Val complete");
     next();
 }
 

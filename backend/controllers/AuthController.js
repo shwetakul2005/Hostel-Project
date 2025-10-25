@@ -5,7 +5,7 @@ const jwt=require('jsonwebtoken');
 
 const signup = async (req,res)=>{
     try {
-        // console.log(req.body);  
+        console.log(req.body);  
         const {name, username, email, mobile, password, role} = req.body;
         const user=await UserModel.findOne({email});
         
@@ -21,6 +21,7 @@ const signup = async (req,res)=>{
             password: hashedPassword, // Save the hashed password
             role
         });
+        console.log("User created");
         await newUser.save();
         res.status(201).json({ //created
             message:'Signup successful',
@@ -29,6 +30,7 @@ const signup = async (req,res)=>{
         
     } catch (error) {
         console.error("Signup Error:", error); 
+        console.log("Errorrr", error);
         res.status(500).json({ //Internal Server Error
             message:'Internal Server Error',
             success:false

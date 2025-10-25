@@ -8,10 +8,11 @@ import './Signup.css';
 import hostelImage1 from '../assets/hostel-1.jpg'; 
 import hostelImage2 from '../assets/hostel-2.jpeg';
 import hostelImage3 from '../assets/hostel-3.jpeg';
+import { handleError, handleSuccess } from './utils';
 
 function SignupPage() {
     //Form state
-    const [formData, setFormData] = useState({
+    const [signupInfo, setSignupInfo] = useState({
         role: 'student',
         name: '',
         username: '',
@@ -24,21 +25,46 @@ function SignupPage() {
     // Handlers
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value,
-        }));
+        // console.log(name, value);
+        const copySignupInfo={...signupInfo};
+        copySignupInfo[name]=value;
+
+        setSignupInfo(copySignupInfo);
     };
+    console.log("Signup Info -", signupInfo);
 
-    const handleSubmit = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-        console.log("Form data to be sent:", formData);
-        
+        const {role, name, username, email, mobile, password}=signupInfo;
+        console.log("Form data to be sent:", signupInfo);
+        if(!name || !role || !username || !email || !mobile || !password){
+            return handleError('All fields are required');
+        }
         try {
-            
-            toast.success("Signup successful! Please log in.");
-            setTimeout(() => navigate('/login'), 2000);
+            const url="http://localhost:8080/auth/signup";
+            const response=await fetch(url, {
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(signupInfo)
+            });
 
+            const result=await response.json();
+            console.log(result);
+            const {success, message, error}=result;
+            if(success){
+                handleSuccess(message);
+                setTimeout(() => navigate('/login'), 2000);
+            }
+            else if(error){
+                const details=error?.details[0].message;
+                handleError(details);
+            }
+            else if(!success){
+                handleError(message);
+            }
+            console.log(result);
         } catch (error) {
             const errorMsg = error.response?.data?.message || error.message;
             console.error("Signup failed:", errorMsg);
@@ -52,11 +78,9 @@ function SignupPage() {
             
             <div className='signup-container'>
                 
-                {/* --- 1. CAROUSEL HALF (Left) --- */}
                 <div className='signup-carousel-half'>
                     <div id="hostelCarousel" className="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000">
                         
-                        {/* Indicators (Bottom dots) */}
                         <div className="carousel-indicators">
                             <button type="button" data-bs-target="#hostelCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                             <button type="button" data-bs-target="#hostelCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -102,7 +126,7 @@ function SignupPage() {
 
                 {/* --- 2. FORM HALF (Right) --- */}
                 <div className='signup-form-half'>
-                    <form className='signup-form' onSubmit={handleSubmit}>
+                    <form className='signup-form' onSubmit={handleSignup}>
                         <h1>Please sign up to continue</h1>
                         
                         <div className='form-group'>
@@ -111,7 +135,7 @@ function SignupPage() {
                                 name="role" 
                                 id="role" 
                                 className='form-control'
-                                value={formData.role}
+                                value={signupInfo.role}
                                 onChange={handleChange}
                             >
                                 <option value="student">Student</option>
@@ -128,9 +152,9 @@ function SignupPage() {
                                 id="name" 
                                 className='form-control'
                                 placeholder='Enter Your Name'
-                                value={formData.name}
+                                value={signupInfo.name}
                                 onChange={handleChange}
-                                required
+
                             />
                         </div>
 
@@ -142,9 +166,9 @@ function SignupPage() {
                                 id="username" 
                                 className='form-control'
                                 placeholder='Enter Your Username'
-                                value={formData.username}
+                                value={signupInfo.username}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
 
@@ -156,9 +180,9 @@ function SignupPage() {
                                 id="email" 
                                 className='form-control'
                                 placeholder='Enter Email Address'
-                                value={formData.email}
+                                value={signupInfo.email}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
 
@@ -170,9 +194,9 @@ function SignupPage() {
                                 id="mobile" 
                                 className='form-control'
                                 placeholder='Enter Mobile No.'
-                                value={formData.mobile}
+                                value={signupInfo.mobile}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
 
@@ -184,9 +208,9 @@ function SignupPage() {
                                 id="password" 
                                 className='form-control'
                                 placeholder='Enter Password'
-                                value={formData.password}
+                                value={signupInfo.password}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
                         

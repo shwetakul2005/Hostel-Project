@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
+    const bodyParser = require('body-parser');
 const cors = require('cors'); 
 const AuthRouter = require('./routes/AuthRouter.js');
 //Role-based Routers
