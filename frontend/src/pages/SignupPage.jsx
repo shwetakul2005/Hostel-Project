@@ -31,7 +31,7 @@ function SignupPage() {
 
         setSignupInfo(copySignupInfo);
     };
-    console.log("Signup Info -", signupInfo);
+    // console.log("Signup Info -", signupInfo);
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -51,7 +51,7 @@ function SignupPage() {
             });
 
             const result=await response.json();
-            console.log(result);
+            // console.log(result);
             const {success, message, error}=result;
             if(success){
                 handleSuccess(message);

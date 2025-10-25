@@ -49,7 +49,7 @@ const login = async (req,res)=>{
         const isPasswordMatch = await bcrypt.compare(password, user.password);
 
         if (!isPasswordMatch) {
-            return res.status(403).json({ message: 'Auth failed - Invalid username or password', success: false });//forbidden
+            return res.status(403).json({ message: 'Invalid username or password', success: false });//forbidden
         }
         const payload={
             id: user._id,
@@ -65,7 +65,9 @@ const login = async (req,res)=>{
             message:'Login Successful',
             success:true,
             jwtToken,
-            username
+            username,
+            name:user.name,
+            role:user.role
         })
         
     } catch (error) {
