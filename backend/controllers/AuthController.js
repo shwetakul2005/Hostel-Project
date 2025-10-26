@@ -21,7 +21,6 @@ const signup = async (req,res)=>{
             password: hashedPassword, // Save the hashed password
             role
         });
-        console.log("User created");
         await newUser.save();
         res.status(201).json({ //created
             message:'Signup successful',
@@ -54,7 +53,7 @@ const login = async (req,res)=>{
         const payload={
             id: user._id,
             username: user.username,
-            role: user.role            
+            role: user.role          
         }
         const jwtToken=jwt.sign( //so that the user doesn't need to prove their identity on every request
             payload,

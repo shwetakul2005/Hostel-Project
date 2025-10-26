@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
+
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -45,5 +46,5 @@ const UserSchema = new mongoose.Schema({
         default: 'student'  // Automatically sets new users to 'student'
     }
 }, { timestamps: true }); // Automatically adds 'createdAt' and 'updatedAt' fields
-const UserModel=mongoose.model('users', UserSchema); //Creates a collection
+const UserModel=mongoose.model('User', UserSchema); //Creates a collection
 module.exports = UserModel;

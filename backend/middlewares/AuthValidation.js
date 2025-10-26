@@ -32,7 +32,29 @@ const loginVal=(req,res,next)=>{
     }
     next(); 
 }
+
+const announcementVal = (req, res, next) => {
+    const schema = Joi.object({
+        title: Joi.string().trim().min(3).max(150).required().messages({
+            'string.min': 'Title must be at least 3 characters long',
+            'string.max': 'Title must be less than 150 characters'
+        }),
+        content: Joi.string().trim().min(10).required().messages({
+            'string.min': 'Content must be at least 10 characters long'
+        }),
+        expiryDate: Joi.date().optional().allow(null),
+        status: Joi.string().valid('online', 'offline').optional()//not neccessary but okay to keep it in
+    });
+
+    const { error } = schema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+    }
+    next();
+}
+
 module.exports={
     signupVal,
-    loginVal
+    loginVal,
+    announcementVal
 }
