@@ -64,7 +64,7 @@ function SignupPage() {
             else if(!success){
                 handleError(message);
             }
-            console.log(result);
+            // console.log(result);
         } catch (error) {
             const errorMsg = error.response?.data?.message || error.message;
             console.error("Signup failed:", errorMsg);

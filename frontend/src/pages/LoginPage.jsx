@@ -48,6 +48,7 @@ function LoginPage() {
                 toast.success("Login successful! Redirecting...");
                 localStorage.setItem('token', jwtToken);
                 localStorage.setItem('loggedInUser', name);
+                localStorage.setItem('role', role);
                 if(role=='student'){
                     setTimeout(() => navigate('/student/dashboard'), 2000); // Navigate to dashboard
                 }

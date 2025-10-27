@@ -71,17 +71,6 @@ img.coep-logo{
     margin-left: 1.5rem
 }
 
-.btn-register {
-    background-color: #1abc9c;
-    border-color: #1abc9c;
-    font-weight: 600;
-}
-
-.btn-register:hover {
-    background-color: #16a085;
-    border-color: #16a085;
-}
-
 .landing-carousel-half {
     width: 100%;
     height: 85vh; 
@@ -159,8 +148,7 @@ img.coep-logo{
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.amenity-icon {
-    color: #1abc9c; 
+.amenity-icon { 
     margin-bottom: 1rem;
 }
 img {
