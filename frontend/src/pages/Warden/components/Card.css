@@ -1,0 +1,56 @@
+.announcement-card-view {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border-left: 6px solid #ffde39; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.announcement-card-view:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-view-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f4f4f4;
+}
+
+.card-view-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color:#34495e;
+    margin: 0 0 0.5rem 0;
+}
+
+.card-view-author {
+    font-size: 1rem;
+    color: #555;
+    font-style: italic;
+}
+
+.card-view-author strong {
+    font-style: normal;
+    color: #333;
+}
+
+.card-view-content {
+    font-size: 1.15rem;
+    color: #34495e;
+    line-height: 1.7;
+    white-space: pre-wrap; 
+    margin-bottom: 1.5rem;
+}
+
+.card-view-footer {
+    text-align: right;
+}
+
+.card-view-date {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #747a7c;
+}

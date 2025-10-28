@@ -1,30 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './WardenDashboard.css'; // We will create this CSS file next
+import ViewAnnouncements from './ViewAnnouncements';
 
 function WardenDashboard() {
   return (
     <div className="warden-dashboard">
-      
-      {/* Announcement Bar */}
       <div className="announcements-bar">
-        <h3>Important Announcements</h3>
-        <p>
-          - All students must update their profile information by the end of this week.
-        </p>
-        <p>
-          - Mess timings will be revised from next Monday. Check the log for details.
-        </p>
+      <ViewAnnouncements/>
       </div>
-
-      {/* Dashboard Card Grid */}
       <div className="dashboard-grid">
         <Link to="/warden/night-out" className="dashboard-card">
           <h4>Pending Approvals</h4>
           <p>Review and approve/reject night out requests.</p>
         </Link>
         
-        <Link to="/warden/add-announcement" className="dashboard-card">
+        <Link to="/warden/add-announcements" className="dashboard-card">
           <h4>Add Announcements</h4>
           <p>Post new announcements for students and staff.</p>
         </Link>

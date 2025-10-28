@@ -1,4 +1,4 @@
-const { viewAnnouncements, addAnnouncements, AnnouncementLogs, changeStatus } = require('../controllers/WardenController');
+const { viewAnnouncements, addAnnouncements, AnnouncementLogs, changeStatus, deleteAnnouncement } = require('../controllers/WardenController');
 const { ensureAuthenticated, checkRole } = require('../middlewares/Auth');
 const { announcementVal } = require('../middlewares/AuthValidation');
 
@@ -8,5 +8,6 @@ router.get('/view-announcements', ensureAuthenticated, checkRole(['mess','studen
 router.post('/add-announcements', ensureAuthenticated, checkRole('warden'), announcementVal, addAnnouncements);
 router.get('/announcement-logs', ensureAuthenticated, checkRole('warden'), AnnouncementLogs);
 router.patch('/change-status/:id/status', ensureAuthenticated, checkRole('warden'), changeStatus);
+router.delete('/announcements/:id', ensureAuthenticated, checkRole('warden'), deleteAnnouncement);
 
 module.exports=router;

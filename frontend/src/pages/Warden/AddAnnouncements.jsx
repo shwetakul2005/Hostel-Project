@@ -14,7 +14,7 @@ function AddAnnouncement() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Get today's date in YYYY-MM-DD format for the min date
+    // To get today's date in YYYY-MM-DD format for the min date
     const today = new Date().toISOString().split('T')[0];
 
     const handleChange = (e) => {
@@ -71,14 +71,15 @@ function AddAnnouncement() {
                 });
                 setTimeout(() => navigate('/warden/dashboard'), 2000);
             } else if (error) {
-                const details = error?.details[0]?.message;
+                const details = error?.details[0]?.message; //Joi validation error
                 handleError(details || "An error occurred.");
             } else if (!success) {
-                handleError(message || "An error occurred.");
+                handleError(message || "An error occurred."); //Invalid/Expired Token Error
+                // success is false but the error object is missing or null so 
             }
-            console.log("Server Response:", result);
+            // console.log("Server Response:", result);
 
-        } catch (error) {
+        } catch (error) { //Network Errors
             const errorMsg = error.message || "An unknown error occurred";
             console.error("Announcement could not be created:", errorMsg);
             toast.error("Announcement could not be created. Please try again.");

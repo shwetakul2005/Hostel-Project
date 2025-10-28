@@ -1,0 +1,96 @@
+.ann-card-log {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.ann-card-log:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.card-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.card-log-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.card-log-controls {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0; 
+}
+
+
+.status-btn,
+.delete-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.status-btn.online {
+    background-color: #2ecc71; 
+    color: white;
+}
+.status-btn.online:hover {
+    background-color: #27ae60;
+}
+
+.status-btn.offline {
+    background-color: #f1c40f; 
+    color: #333;
+}
+.status-btn.offline:hover {
+    background-color: #f39c12;
+}
+
+.delete-btn {
+    background-color: #e74c3c; 
+    color: white;
+}
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+
+.card-log-content {
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #34495e;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.card-log-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.card-log-author {
+    font-style: italic;
+}

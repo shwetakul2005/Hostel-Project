@@ -122,11 +122,36 @@ const changeStatus = async(req,res)=>{
     }    
 }
 
+const deleteAnnouncement = async (req,res)=>{
+    try{
+        const {id}=req.params;
+        const deletedAnn = await AnnouncementModel.findByIdAndDelete(id);
+        if (!deletedAnn) {
+            return res.status(404).json({
+                message:"No Announcement found with that id.",
+                success:false
+            });
+        }
+        res.status(200).json({
+            message:"Announcement deleted successfully",
+            success:true
+        });
+    }
+    catch(err){
+        console.error("Could not delete announcement error:", err);
+        res.status(500).json({
+            message:"Could not delete announcement. Internal server error.",
+            success:false
+        });  
+    }
+}
+
 //orderFromMess function is present in StudentController.js already
 module.exports={
     addAnnouncements,
     leaveApproval,
     viewAnnouncements,
     AnnouncementLogs,
-    changeStatus
+    changeStatus,
+    deleteAnnouncement
 }

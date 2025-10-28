@@ -10,6 +10,7 @@ import MessDashboard from './pages/Mess/MessDashboard'
 import WardenDashboard from './pages/Warden/WardenDashboard'
 import AppNavbar from './pages/AppNavbar'
 import AddAnnouncement from './pages/Warden/AddAnnouncements'
+import AnnouncementLogs from './pages/Warden/AnnouncementLogs'
 
 // 1. Create a layout for pages that NEED the AppNavbar
 function ProtectedLayout() {
@@ -55,13 +56,11 @@ function App() {
             <Route path="/mess/dashboard" element={<MessDashboard />} />
 
             <Route path="/warden/add-announcements" element={<AddAnnouncement/>} />
+            <Route path="/warden/announcement-log" element={<AnnouncementLogs />} />
             
-            {/* Add all your other protected routes here 
-              (e.g., the ones from your navbar):
-            */}
             {/* <Route path="/warden/night-out" element={<YourNightOutPage />} /> */}
             {/* <Route path="/warden/add-announcement" element={<YourAddAnnouncementPage />} /> */}
-            {/* <Route path="/warden/announcement-log" element={<YourAnnLogPage />} /> */}
+            
             {/* <Route path="/warden/order-mess" element={<YourOrderMessPage />} /> */}
           </Route>
 
