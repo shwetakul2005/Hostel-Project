@@ -21,7 +21,7 @@ const nightoutForm = async(req,res)=>{
                 });
         console.log("Announcement created");
         await newApplication.save();
-        res.status(200).json({ 
+        res.status(201).json({ //created
                 message:`Night-out form for user ${req.user.username} submitted!`,
                 success:true
             })
@@ -42,15 +42,26 @@ const markAbsenteeInMess=(req,res)=>{
         })
 }
 
-const viewApplication=(req,res)=>{
+const viewApplication = async (req,res)=>{
     try{
-        res.status(200).json({
-            message:"Application viewed successfully.",
-            success:true
+        const id = req.user.id;
+        const application = await ApplicationModel.find({studentID:id}).sort({createdAt:-1});
+        if(application.length==0){
+            return res.status(200).json({
+                message:"You have not submitted any applications yet.",
+                success:true,
+                application:[]
+            })
+        }
+        return res.status(200).json({
+            message:"Application viewed successfully!",
+            success:true,
+            application:application
         })
     }
     catch(err){
-        res.status(500).json({
+        console.error("Error:", err);
+        return res.status(500).json({
             message:"Could not view application. Internal Server Error.",
             success:false
         })

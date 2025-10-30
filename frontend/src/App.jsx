@@ -11,21 +11,19 @@ import WardenDashboard from './pages/Warden/WardenDashboard'
 import AppNavbar from './pages/AppNavbar'
 import AddAnnouncement from './pages/Warden/AddAnnouncements'
 import AnnouncementLogs from './pages/Warden/AnnouncementLogs'
+import NightOutForm from './pages/Student/NightOutForm'
 
-// 1. Create a layout for pages that NEED the AppNavbar
 function ProtectedLayout() {
   return (
     <>
       <AppNavbar />
       <main className="app-content">
-        <Outlet /> {/* This will render the matched child route (e.g., WardenDashboard) */}
+        <Outlet /> {/* This will render the WardenDashboard etc */}
       </main>
     </>
   );
 }
 
-// 2. Create a layout for pages that DON'T need any navbar
-// (like login/signup) or have their own (like LandingPage)
 function PublicLayout() {
   return (
     <main className="app-content">
@@ -38,10 +36,9 @@ function App() {
 
   return (
     <>
-      {/* 3. Remove the global <AppNavbar/> from here */}
       <div className="App">
         <Routes>
-          {/* Routes WITHOUT the AppNavbar */}
+          {/* Routes without the AppNavbar */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/login" element={<LoginPage />} />
@@ -49,7 +46,7 @@ function App() {
             <Route path="/home" element={<LandingPage />} />
           </Route>
 
-          {/* Routes WITH the AppNavbar */}
+          {/* Routes with the AppNavbar */}
           <Route element={<ProtectedLayout />}>
             <Route path="/student/dashboard" element={<StudentDashboard />} />
             <Route path="/warden/dashboard" element={<WardenDashboard />} />
@@ -57,8 +54,8 @@ function App() {
 
             <Route path="/warden/add-announcements" element={<AddAnnouncement/>} />
             <Route path="/warden/announcement-log" element={<AnnouncementLogs />} />
-            
-            {/* <Route path="/warden/night-out" element={<YourNightOutPage />} /> */}
+
+            <Route path="/student/nightout-form" element={<NightOutForm />} />
             {/* <Route path="/warden/add-announcement" element={<YourAddAnnouncementPage />} /> */}
             
             {/* <Route path="/warden/order-mess" element={<YourOrderMessPage />} /> */}
