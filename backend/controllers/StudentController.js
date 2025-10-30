@@ -46,13 +46,13 @@ const viewApplication = async (req,res)=>{
     try{
         const id = req.user.id;
         const application = await ApplicationModel.find({studentID:id}).sort({createdAt:-1});
-        if(application.length==0){
-            return res.status(200).json({
-                message:"You have not submitted any applications yet.",
-                success:true,
-                application:[]
-            })
-        }
+        // if(application.length==0){  //we take care of this on client-side
+        //     return res.status(200).json({
+        //         message:"You have not submitted any applications yet.",
+        //         success:true,
+        //         application:[]
+        //     })
+        // }
         return res.status(200).json({
             message:"Application viewed successfully!",
             success:true,

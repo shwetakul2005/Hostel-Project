@@ -37,7 +37,7 @@ function StudentNavbar() {
                         <Link to="/student/nightout-form" className="navbar-link" onClick={() => setMenuOpen(false)}>Night Out Form</Link>
                     </li>
                     <li className="navbar-item">
-                        <Link to="/student/applications" className="navbar-link" onClick={() => setMenuOpen(false)}>View Application</Link>
+                        <Link to="/student/view-applications" className="navbar-link" onClick={() => setMenuOpen(false)}>View Application</Link>
                     </li>
                     <li className="navbar-item">
                         <Link to="/student/order-from-mess" className="navbar-link" onClick={() => setMenuOpen(false)}>Order from Mess</Link>

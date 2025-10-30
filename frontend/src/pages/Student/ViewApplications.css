@@ -1,0 +1,43 @@
+.view-apps-container {
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Libre Baskerville', serif;
+}
+
+
+.view-apps-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+
+.loading-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.no-apps-view {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #777;
+  text-align: center;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.apps-list-view {
+  display: grid;
+ 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+

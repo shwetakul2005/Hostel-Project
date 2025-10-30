@@ -1,0 +1,80 @@
+.application-card {
+  font-family: 'Libre Baskerville', serif;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative; 
+  overflow: hidden; 
+}
+
+.status-badge {
+  position: absolute;
+  top: 1.5rem; 
+  right: 1.5rem; 
+  
+
+  cursor: default !important; 
+  user-select: none !important;
+  text-transform: capitalize;
+}
+
+.status-badge.btn-warning {
+    color: #212529 !important; 
+}
+
+.card-header .card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  padding-right: 120px; 
+}
+
+.card-body {
+  color: #555;
+}
+
+.card-body .submission-date {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #777;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.warden-remark {
+  background-color: #f9f9f9;
+  border-left: 4px solid #ccc;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.warden-remark.pending {
+  border-left-color: #f39c12; 
+}
+.warden-remark.approved {
+  border-left-color: #28a745; 
+}
+.warden-remark.rejected {
+  border-left-color: #dc3545; 
+}
+
+
+.warden-remark strong {
+  font-size: 1rem;
+  color: #333;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.warden-remark p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+

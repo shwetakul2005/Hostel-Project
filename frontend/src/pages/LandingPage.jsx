@@ -144,7 +144,8 @@ function LandingPage() {
                             Shivajinagar, Pune, <br />
                             Maharashtra 411005
                         </p>
-                        <Link to="/contact" className="btn btn-primary btn-lg">Get Directions</Link>
+                        <Link to="https://www.google.com/maps/place/COEP+Girls+Hostel+Building,+Shivajinagar,+Pune,+Maharashtra+411005/@18.5289377,73.8493935,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c07d671871f3:0xe8e5ad047c969c03!8m2!3d18.5289326!4d73.8519684!16s%2Fg%2F11wb1vngj7?entry=ttu&g_ep=EgoyMDI1MTAyOC4wIKXMDSoASAFQAw%3D%3D" 
+                        className="btn btn-primary btn-lg">Get Directions</Link>
                     </div>
                 </div>
             </section>
