@@ -53,8 +53,48 @@ const announcementVal = (req, res, next) => {
     next();
 }
 
+const applicationVal=(req,res,next)=>{
+    const schema = Joi.object({
+        
+        mis: Joi.string().trim().pattern(new RegExp(/^\d{9}$/)).required().messages({
+                'string.pattern.base': 'Please enter a valid 9-digit MIS number',
+            }),
+
+        fromDate: Joi.date().iso().min('now').required().messages({
+                'date.min': 'Start date must be today or a future date',
+            }),
+
+        toDate: Joi.date().iso().greater(Joi.ref('fromDate')).required().messages(),
+
+        parentName: Joi.string().trim().min(2).required().messages(),
+
+        parentMobile: Joi.string().trim().pattern(new RegExp(/^[6-9]\d{9}$/)).required().messages({
+                'string.pattern.base': 'Please enter a valid 10-digit mobile number'
+            }),
+
+        room: Joi.string().trim().min(2).required().messages(),
+
+        address: Joi.string().trim().min(10).required().messages({
+                'string.min': 'Address must be at least 10 characters long'
+            })
+    });
+
+    const { error } = schema.validate(req.body);
+    if (error) {
+        // Send back the first error message
+        return res.status(400).json({ 
+            message: error.details[0].message,
+            error: error, // Send the full error object for debugging
+            success: false 
+        });
+    }
+    
+    next();
+}
+
 module.exports={
     signupVal,
     loginVal,
-    announcementVal
+    announcementVal,
+    applicationVal
 }
