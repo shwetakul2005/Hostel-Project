@@ -34,10 +34,10 @@ function StudentNavbar() {
                 {/* Menu items */}
                 <ul className={menuOpen ? "navbar-menu active" : "navbar-menu"}>
                     <li className="navbar-item">
-                        <Link to="/student/apply-leave" className="navbar-link" onClick={() => setMenuOpen(false)}>Night Out Approval</Link>
+                        <Link to="/student/nightout-form" className="navbar-link" onClick={() => setMenuOpen(false)}>Night Out Form</Link>
                     </li>
                     <li className="navbar-item">
-                        <Link to="/student/announcements" className="navbar-link" onClick={() => setMenuOpen(false)}>View Application</Link>
+                        <Link to="/student/applications" className="navbar-link" onClick={() => setMenuOpen(false)}>View Application</Link>
                     </li>
                     <li className="navbar-item">
                         <Link to="/student/order-from-mess" className="navbar-link" onClick={() => setMenuOpen(false)}>Order from Mess</Link>

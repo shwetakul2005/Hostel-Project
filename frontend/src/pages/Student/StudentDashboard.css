@@ -1,0 +1,49 @@
+.student-dashboard {
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+
+.announcements-bar {
+  background-color: #fffbe6; 
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h4 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: #2c3e50; 
+}
+
+.dashboard-card p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
