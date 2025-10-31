@@ -181,7 +181,7 @@ const viewApplications = async(req,res)=>{
     try{
         let Applications=await ApplicationModel.find(
             { "status": "Pending"}).populate('studentID', 'name mobile').sort({ createdAt: -1 });
-        console.log(Applications);
+        // console.log(Applications);
         if(Applications.length==0){
             return res.status(200).json({
                     message:'No applications to review.',

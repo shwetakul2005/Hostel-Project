@@ -43,7 +43,7 @@ function ViewPendingApplications() {
                     const {success, message, Applications}=result;
                     if(success){
                         setApplicationData(Applications);
-                        console.log('Applications received by frontend:', Applications.length);
+                        // console.log('Applications received by frontend:', Applications.length);
                     } else if (!success) {
                         handleError(message || "An error occurred.");
                     }                        

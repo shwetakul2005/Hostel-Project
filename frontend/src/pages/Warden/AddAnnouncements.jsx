@@ -1,46 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './AddAnnouncements.css';
 import { handleError, handleSuccess } from '../utils'; 
+import { useForm } from 'react-hook-form'; 
 
 function AddAnnouncement() {
-    const [AnnouncementData, setAnnouncementData] = useState({
-        title: '',
-        content: '',
-        expiryDate: '',
+    const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
+        defaultValues: {
+            title: '',
+            content: '',
+            expiryDate: ''
+        }
     });
-    const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
 
     // To get today's date in YYYY-MM-DD format for the min date
     const today = new Date().toISOString().split('T')[0];
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        const copyAnnouncementData={...AnnouncementData};
-        copyAnnouncementData[name]=value;
-        setAnnouncementData(copyAnnouncementData);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        let { title, content, expiryDate } = AnnouncementData;
-        console.log("Submitting:", AnnouncementData);
-
-        if (!title || !content) {
-            setIsLoading(false); 
-            return handleError("Title and content are required.");
-        }
+    const onSubmit = async (data) => {
+        console.log("Submitting:", data);
 
         try {
-           
             const token = localStorage.getItem('token');
             if (!token) {
-                setIsLoading(false);
                 handleError("Authentication error. Please log in again.");
                 return navigate('/login');
             }
@@ -53,9 +38,9 @@ function AddAnnouncement() {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    title,
-                    content,
-                    expiryDate: expiryDate || null 
+                    title: data.title,
+                    content: data.content,
+                    expiryDate: data.expiryDate || null 
                 })
             });
 
@@ -64,11 +49,7 @@ function AddAnnouncement() {
 
             if (success) {
                 handleSuccess(message || "Announcement posted successfully!");
-                setAnnouncementData({
-                    title: '',
-                    content: '',
-                    expiryDate: '',
-                });
+                reset(); 
                 setTimeout(() => navigate('/warden/dashboard'), 2000);
             } else if (error) {
                 const details = error?.details[0]?.message; //Joi validation error
@@ -83,16 +64,14 @@ function AddAnnouncement() {
             const errorMsg = error.message || "An unknown error occurred";
             console.error("Announcement could not be created:", errorMsg);
             toast.error("Announcement could not be created. Please try again.");
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
 
     return (
         <>
             <ToastContainer position="top-right" autoClose={3000} />
             <div className="form-container-wrapper">
-                <form className="announcement-form" onSubmit={handleSubmit}>
+                <form className="announcement-form" onSubmit={handleSubmit(onSubmit)}>
                     <h2>Post a New Announcement</h2>
                     <p className="form-subtitle">This announcement will be visible to all students.</p>
                     
@@ -101,23 +80,37 @@ function AddAnnouncement() {
                         <input
                             type="text"
                             id="title"
-                            name="title"
-                            value={AnnouncementData.title}
-                            onChange={handleChange}
                             placeholder="Enter title..."
+                            {...register("title", {
+                                required: "Title is required",
+                                minLength: {
+                                    value: 3,
+                                    message: 'Title must be at least 3 characters long'
+                                },
+                                maxLength: {
+                                    value: 150,
+                                    message: 'Title must be less than 150 characters'
+                                }
+                            })}
                         />
+                        {errors.title && <p style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.title.message}</p>}
                     </div>
                     
                     <div className="form-group">
                         <label htmlFor="content">Content</label>
                         <textarea
                             id="content"
-                            name="content"
-                            value={AnnouncementData.content}
-                            onChange={handleChange}
                             rows="6"
                             placeholder="Write the full details of the announcement here..."
+                            {...register("content", {
+                                required: "Content is required",
+                                minLength: {
+                                    value: 10,
+                                    message: 'Content must be at least 10 characters long'
+                                }
+                            })}
                         />
+                        {errors.content && <p style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.content.message}</p>}
                     </div>
                     
                     <div className="form-group">
@@ -125,16 +118,14 @@ function AddAnnouncement() {
                         <input
                             type="date"
                             id="expiryDate"
-                            name="expiryDate"
-                            value={AnnouncementData.expiryDate}
-                            onChange={handleChange}
                             min={today} 
+                            {...register("expiryDate")}
                         />
                         <small>The announcement will be hidden after this date. Leave blank to keep it active indefinitely.</small>
                     </div>
                     
-                    <button type="submit" className="submit-btn" disabled={isLoading}>
-                        {isLoading ? "Posting..." : "Post Announcement"}
+                    <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                        {isSubmitting ? "Posting..." : "Post Announcement"}
                     </button>
                 </form>
             </div>

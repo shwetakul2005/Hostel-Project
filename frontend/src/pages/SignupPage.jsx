@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react'; // Removed useState
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import './Signup.css'; 
-
+import { useForm } from 'react-hook-form';
 
 import hostelImage1 from '../assets/hostel-1.jpg'; 
 import hostelImage2 from '../assets/hostel-2.jpeg';
@@ -11,35 +11,17 @@ import hostelImage3 from '../assets/hostel-3.jpeg';
 import { handleError, handleSuccess } from './utils';
 
 function SignupPage() {
-    //Form state
-    const [signupInfo, setSignupInfo] = useState({
-        role: 'student',
-        name: '',
-        username: '',
-        email: '',
-        mobile: '',
-        password: '',
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            role: 'student' 
+        }
     });
     const navigate = useNavigate();
 
     // Handlers
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        // console.log(name, value);
-        const copySignupInfo={...signupInfo};
-        copySignupInfo[name]=value;
-
-        setSignupInfo(copySignupInfo);
-    };
-    // console.log("Signup Info -", signupInfo);
-
-    const handleSignup = async (e) => {
-        e.preventDefault();
-        const {role, name, username, email, mobile, password}=signupInfo;
-        console.log("Form data to be sent:", signupInfo);
-        if(!name || !role || !username || !email || !mobile || !password){
-            return handleError('All fields are required');
-        }
+    const handleSignup = async (data) => {
+        console.log("Form data to be sent:", data);
+        
         try {
             const url="http://localhost:8080/auth/signup";
             const response=await fetch(url, {
@@ -47,7 +29,7 @@ function SignupPage() {
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(signupInfo)
+                body: JSON.stringify(data) // Use 'data' from react-hook-form
             });
 
             const result=await response.json();
@@ -87,7 +69,6 @@ function SignupPage() {
                             <button type="button" data-bs-target="#hostelCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
                         </div>
                         
-                        {/* Slides (Images and Captions) */}
                         <div className="carousel-inner">
                             <div className="carousel-item active">
                                 <img src={hostelImage1} className="d-block w-100" alt="Hostel Room" />
@@ -112,7 +93,6 @@ function SignupPage() {
                             </div>
                         </div>
                         
-                        {/* Controls (Left/Right Arrows) */}
                         <button className="carousel-control-prev" type="button" data-bs-target="#hostelCarousel" data-bs-slide="prev">
                             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Previous</span>
@@ -124,94 +104,115 @@ function SignupPage() {
                     </div>
                 </div>
 
-                {/* --- 2. FORM HALF (Right) --- */}
+                {/* FORM HALF*/}
                 <div className='signup-form-half'>
-                    <form className='signup-form' onSubmit={handleSignup}>
+                    <form className='signup-form' onSubmit={handleSubmit(handleSignup)}>
                         <h1>Please sign up to continue</h1>
                         
                         <div className='form-group'>
                             <label htmlFor="role">Sign up as...</label>
                             <select 
-                                name="role" 
                                 id="role" 
                                 className='form-control'
-                                value={signupInfo.role}
-                                onChange={handleChange}
+                                {...register("role", { 
+                                    required: "Please select a role" 
+                                })}
                             >
                                 <option value="student">Student</option>
                                 <option value="warden">Warden</option>
                                 <option value="mess">Mess</option>
                             </select>
+                            {errors.role && <p className="error-message" style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.role.message} </p>}
                         </div>
 
                         <div className='form-group'>
                             <label htmlFor="name">Name</label>
                             <input 
                                 type="text" 
-                                name="name" 
                                 id="name" 
                                 className='form-control'
                                 placeholder='Enter Your Name'
-                                value={signupInfo.name}
-                                onChange={handleChange}
-
+                                {...register("name", {
+                                    required: "Name is required",
+                                    minLength: {
+                                        value: 2,
+                                        message: "Name must be at least 2 characters"
+                                    }
+                                })}
                             />
+                            {errors.name && <p className="error-message" style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.name.message}</p>}
                         </div>
 
                         <div className='form-group'>
                             <label htmlFor="username">Username</label>
                             <input 
                                 type="text" 
-                                name="username" 
                                 id="username" 
                                 className='form-control'
                                 placeholder='Enter Your Username'
-                                value={signupInfo.username}
-                                onChange={handleChange}
-                                
+                                {...register("username", {
+                                    required: "Username is required",
+                                    minLength: {
+                                        value: 3,
+                                        message: "Username must be at least 3 characters"
+                                    }
+                                })}
                             />
+                            {errors.username && <p className="error-message" style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.username.message}</p>}
                         </div>
 
                         <div className='form-group'>
                             <label htmlFor="email">Email ID</label>
                             <input 
                                 type="email" 
-                                name="email" 
                                 id="email" 
                                 className='form-control'
                                 placeholder='Enter Email Address'
-                                value={signupInfo.email}
-                                onChange={handleChange}
-                                
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: "Please enter a valid email"
+                                    }
+                                })}
                             />
+                            {errors.email && <p className="error-message" style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.email.message}</p>}
                         </div>
 
                         <div className='form-group'>
                             <label htmlFor="mobile">Mobile Number</label>
                             <input 
-                                type="tel" // 'tel' is better for mobile numbers
-                                name="mobile" 
+                                type="tel" 
                                 id="mobile" 
                                 className='form-control'
                                 placeholder='Enter Mobile No.'
-                                value={signupInfo.mobile}
-                                onChange={handleChange}
-                                
+                                {...register("mobile", {
+                                    required: "Mobile number is required",
+                                    pattern: {
+                                        value: /^[6-9]\d{9}$/,
+                                        message: "Please enter a valid 10-digit mobile number"
+                                    }
+                                })}
                             />
+                            {errors.mobile && <p className="error-message" style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.mobile.message}</p>}
                         </div>
 
                         <div className='form-group'>
                             <label htmlFor="password">Password</label>
                             <input 
-                                type="password" // Use 'password' type
-                                name="password" 
+                                type="password"
                                 id="password" 
                                 className='form-control'
                                 placeholder='Enter Password'
-                                value={signupInfo.password}
-                                onChange={handleChange}
-                                
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 6,
+                                        message: "Password must be at least 6 characters"
+                                    }
+                                })}
                             />
+                            {errors.password && <p className="error-message" style={{ color: 'red', fontSize: '1rem', margin: '5px 0 0' }}>{errors.password.message}</p>}
                         </div>
                         
                         <button type="submit" className='btn btn-primary w-100'>Sign Up</button>

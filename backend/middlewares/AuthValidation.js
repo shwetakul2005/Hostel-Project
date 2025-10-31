@@ -72,7 +72,7 @@ const applicationVal=(req,res,next)=>{
                 'string.pattern.base': 'Please enter a valid 10-digit mobile number'
             }),
 
-        room: Joi.string().trim().min(2).required().messages(),
+        room: Joi.string().trim().min(3).required().messages(),
 
         address: Joi.string().trim().min(10).required().messages({
                 'string.min': 'Address must be at least 10 characters long'
