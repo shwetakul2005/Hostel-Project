@@ -1,4 +1,5 @@
 const AnnouncementModel = require("../models/Announcements");
+const ApplicationModel = require("../models/Application");
 const UserModel = require('../models/User');
 const addAnnouncements = async (req,res)=>{
     try {
@@ -27,11 +28,41 @@ const addAnnouncements = async (req,res)=>{
         })           
     }    
 }
-const leaveApproval=(req,res)=>{
-    res.status(200).json({ 
-            message:'Leave approved.',
-            success:true
-        })
+const leaveApproval = async(req,res)=>{
+    try {
+        const {status, wardenRemark} = req.body;
+        const {id} = req.params; 
+        if (!['Approved', 'Rejected'].includes(status)) 
+            {
+                return res.status(400).json({ //Bad request
+                    message: 'Invalid status.',
+                    success: false 
+                });
+            }
+        let application = await ApplicationModel.findById(id);
+
+        if (!application) {
+                return res.status(404).json({ //Not found
+                    message: 'Application not found for the given id',
+                    success: false 
+                });
+        }
+
+        application.status = status; 
+        application.wardenRemark=wardenRemark;
+        await application.save();
+         res.status(200).json({ 
+            message:'Leave approved/rejected successfully.',
+            success:true,
+            application:application
+        });
+    } catch (error) {
+        console.error("Change Status Error:", error);
+        res.status(500).json({
+            message:"Internal Server Error. Could not change application status.",
+            success:false,
+        })        
+    }       
 }
 
 const viewAnnouncements=async (req,res)=>{//View all online and unexpired announcements *For all
@@ -44,7 +75,7 @@ const viewAnnouncements=async (req,res)=>{//View all online and unexpired announ
                 { expiryDate: { $gt: now } }]
          } // Or if the expiryDate is present then it is in the future
         ).populate('author', 'name' ).sort({ createdAt: -1 });; //populate only the name field from User
-        console.log(Announcements);
+        // console.log(Announcements);
 
         res.status(200).json({
             message:'Online announcements viewed successfully.',
@@ -146,6 +177,33 @@ const deleteAnnouncement = async (req,res)=>{
     }
 }
 
+const viewApplications = async(req,res)=>{
+    try{
+        let Applications=await ApplicationModel.find(
+            { "status": "Pending"}).populate('studentID', 'name mobile').sort({ createdAt: -1 });
+        console.log(Applications);
+        if(Applications.length==0){
+            return res.status(200).json({
+                    message:'No applications to review.',
+                    success:true,
+                    Applications:Applications
+            })
+        }
+        res.status(200).json({
+            message:'Pending applications viewed successfully.',
+            success:true,
+            Applications:Applications
+        })
+    }
+    catch(error){
+        console.error("View Announcements Error:", error);
+        res.status(500).json({
+            message:'Could not retrieve Applicaitons. Internal Server Error',
+            success:false,
+        })
+    }
+}
+
 //orderFromMess function is present in StudentController.js already
 module.exports={
     addAnnouncements,
@@ -153,5 +211,6 @@ module.exports={
     viewAnnouncements,
     AnnouncementLogs,
     changeStatus,
-    deleteAnnouncement
+    deleteAnnouncement,
+    viewApplications
 }
