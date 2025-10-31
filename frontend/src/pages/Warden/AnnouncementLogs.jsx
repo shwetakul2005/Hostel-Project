@@ -64,7 +64,12 @@ function AnnouncementLogs() {
     
     const handleStatusToggle = async (id, newStatus) => {
         const token = localStorage.getItem('token');
-        
+        if (!token) {
+            setIsLoading(false); 
+            handleError("Token expired, please login in again.");
+            return navigate('/login');
+        }
+
         const API_URL = `http://localhost:8080/api/change-status/${id}/status`; 
 
         try {

@@ -34,7 +34,7 @@ function WardenNavbar() {
                 {/* Menu items: add "active" class when menuOpen is true */}
                 <ul className={menuOpen ? "navbar-menu active" : "navbar-menu"}>
                     <li className="navbar-item">
-                        <Link to="/warden/night-out" className="navbar-link" onClick={() => setMenuOpen(false)}>Leave Approval</Link>
+                        <Link to="/warden/view-applications" className="navbar-link" onClick={() => setMenuOpen(false)}>Leave Approval</Link>
                     </li>
                     <li className="navbar-item">
                         <Link to="/warden/add-announcements" className="navbar-link" onClick={() => setMenuOpen(false)}>Add Announcements</Link>

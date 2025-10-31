@@ -10,7 +10,7 @@ function WardenDashboard() {
       <ViewAnnouncements/>
       </div>
       <div className="dashboard-grid">
-        <Link to="/warden/night-out" className="dashboard-card">
+        <Link to="/warden/view-applications" className="dashboard-card">
           <h4>Pending Approvals</h4>
           <p>Review and approve/reject night out requests.</p>
         </Link>

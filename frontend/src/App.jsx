@@ -13,6 +13,7 @@ import AddAnnouncement from './pages/Warden/AddAnnouncements'
 import AnnouncementLogs from './pages/Warden/AnnouncementLogs'
 import NightOutForm from './pages/Student/NightOutForm'
 import ViewApplications from './pages/Student/ViewApplications'
+import ViewPendingApplications from './pages/Warden/ViewPendingApplications'
 
 function ProtectedLayout() {
   return (
@@ -55,6 +56,8 @@ function App() {
 
             <Route path="/warden/add-announcements" element={<AddAnnouncement/>} />
             <Route path="/warden/announcement-log" element={<AnnouncementLogs />} />
+            <Route path="/warden/view-applications" element={<ViewPendingApplications />} />
+            
 
             <Route path="/student/nightout-form" element={<NightOutForm />} />
             <Route path="/student/view-applications" element={<ViewApplications />} />

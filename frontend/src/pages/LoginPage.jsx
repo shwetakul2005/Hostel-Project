@@ -1,45 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.css'; 
+import { useForm } from 'react-hook-form'; // Import useForm
 
 import loginBgImage from '../assets/hostel-2.jpeg'; 
 import { handleError } from './utils';
 
 function LoginPage() {
-    const [loginInfo, setLoginInfo] = useState({
-        username: '',
-        password: '',
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    // --- Handlers ---
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        // console.log(name, value);
-        const copyLoginInfo={...loginInfo};
-        copyLoginInfo[name]=value;
-
-        setLoginInfo(copyLoginInfo);
-    };
-    console.log("Login Info -", loginInfo);
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        const {username, password}=loginInfo;
-        console.log("Login data to be sent:", loginInfo);
-        if(!username || !password){
-            return handleError("All fields are required.");
-        }
-        try {       
-            const url="http://localhost:8080/auth/login";     
+    // Handlers
+    const handleLogin = async (data) => {
+        console.log("Login data to be sent:", data);
+        
+        try { 
+            const url="http://localhost:8080/auth/login"; 
             const response=await fetch(url, {
                 method:"POST",
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(loginInfo)
+                body: JSON.stringify(data) // Use data from react-hook-form
             });
             const result=await response.json();
             console.log(result);
@@ -53,10 +37,10 @@ function LoginPage() {
                     setTimeout(() => navigate('/student/dashboard'), 2000); // Navigate to dashboard
                 }
                 else if(role=='warden'){
-                    setTimeout(() => navigate('/warden/dashboard'), 2000); // Navigate to dashboard
+                    setTimeout(() => navigate('/warden/dashboard'), 2000); 
                 }
                 else if(role=='mess'){
-                    setTimeout(() => navigate('/mess/dashboard'), 2000); // Navigate to dashboard
+                    setTimeout(() => navigate('/mess/dashboard'), 2000); 
                 }
                 
             }
@@ -91,7 +75,8 @@ function LoginPage() {
                 className='login-container' 
                 style={{ backgroundImage: `url(${loginBgImage})` }}
             >
-                <form className='login-form-box' onSubmit={handleLogin}>
+                {/* handleSubmit receives the event, calls preventDefault() on it, runs all validations, and only if validation passes, it calls the handleLogin function. */}
+                <form className='login-form-box' onSubmit={handleSubmit(handleLogin)}> 
                     <h1>Welcome Back</h1>
                     <h4 textAlign="center">Please log in to your account.</h4>
 
@@ -99,27 +84,28 @@ function LoginPage() {
                         <label htmlFor="username">Username</label>
                         <input 
                             type="text" 
-                            name="username" 
                             id="username" 
                             className='form-control'
                             placeholder='Enter your username'
-                            value={loginInfo.username}
-                            onChange={handleChange}
-                            //removed 'required' because we want to see the server-side validation 
+                            {...register("username", { 
+                                required: "Username is required" 
+                            })}
                         />
+                        {errors.username && <p style={{ color: 'red', fontSize: '0.9em', margin: '5px 0 0' }}>{errors.username.message}</p>}
                     </div>
 
                     <div className='form-group'>
                         <label htmlFor="password">Password</label>
                         <input 
                             type="password" 
-                            name="password" 
                             id="password" 
                             className='form-control'
                             placeholder='Enter your password'
-                            value={loginInfo.password}
-                            onChange={handleChange}
+                            {...register("password", { 
+                                required: "Password is required" 
+                            })}
                         />
+                        {errors.password && <p style={{ color: 'red', fontSize: '0.9em', margin: '5px 0 0' }}>{errors.password.message}</p>}
                     </div>
                     
                     <button type="submit" className='btn btn-primary w-100'>Login</button>
