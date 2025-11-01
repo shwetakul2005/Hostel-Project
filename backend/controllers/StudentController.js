@@ -42,6 +42,15 @@ const markAbsenteeInMess=(req,res)=>{
         })
 }
 
+// const getMenu=async (req,res)=>{
+
+// }
+
+// const placeOrder=async (req,res)=>{
+
+// }
+
+
 const viewApplication = async (req,res)=>{
     try{
         const id = req.user.id;

@@ -1,6 +1,6 @@
-const updateMenu = async (req, res) => {
+const addMenuItem = async (req, res) => {
     try {
-        // const { breakfast, lunch, dinner } = req.body;
+
         // Logic to find the menu and update it
         // e.g., await Menu.findOneAndUpdate({}, { breakfast, lunch, dinner }, { upsert: true });
 
@@ -13,6 +13,23 @@ const updateMenu = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error', success: false });
     }
 };
+
+const deleteMenuItem = async (req, res) => {
+    try {
+
+        // Logic to find the menu and update it
+        // e.g., await Menu.findOneAndUpdate({}, { breakfast, lunch, dinner }, { upsert: true });
+
+        res.status(200).json({
+            message: 'Menu Updated!',
+            success: true
+        });
+    } catch (error) {
+        console.error("Update Menu Error:", error);
+        res.status(500).json({ message: 'Internal Server Error', success: false });
+    }
+};
+
 
 const viewAbsentees = async (req, res) => {
     try {
@@ -50,7 +67,8 @@ const viewOrders = async (req, res) => {
 };
 
 module.exports = {
-    updateMenu,
     viewAbsentees,
-    viewOrders
+    viewOrders,
+    addMenuItem,
+    deleteMenuItem
 };

@@ -160,13 +160,13 @@ const deleteAnnouncement = async (req,res)=>{
         if (!deletedAnn) {
             return res.status(404).json({
                 message:"No Announcement found with that id.",
-                success:false
+                success:true
             });
         }
         res.status(200).json({
             message:"Announcement deleted successfully",
             success:true
-        });
+        }); 
     }
     catch(err){
         console.error("Could not delete announcement error:", err);
