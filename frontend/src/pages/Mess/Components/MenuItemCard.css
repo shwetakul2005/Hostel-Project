@@ -1,0 +1,54 @@
+.menu-item-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+.menu-item-card:last-child {
+    border-bottom: none;
+}
+
+.item-card-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.item-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+
+.item-card-actions button {
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    font-family: 'Libre Baskerville', serif;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+}
+
+
+.btn-toggle.add {
+    background-color: #E3F2FD;
+    color: #1E88E5;
+}
+.btn-toggle.add:hover { background-color: #BBDEFB; }
+
+
+.btn-toggle.remove {
+    background-color: #FFF8E1;
+    color: #B7950B;
+}
+.btn-toggle.remove:hover { background-color: #FFECB3; }
+
+
+.btn-delete-item {
+    background-color: #FBE9E7;
+    color: #D84315;
+}
+.btn-delete-item:hover { background-color: #FFCCBC; }

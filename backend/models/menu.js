@@ -16,7 +16,12 @@ const MenuItemSchema = new Schema({
         type: String,
         required: true,
         enum: ['Available', 'Unavailable'],
-        default: 'Available' 
+        default: 'Unavailable' 
+    },
+    price: {
+        type: Number,     
+        required: false,  
+        default: null     
     }
 }, { timestamps: true });
 

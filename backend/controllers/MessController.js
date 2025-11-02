@@ -1,34 +1,86 @@
+const MenuItemModel = require("../models/menu");
+
 const addMenuItem = async (req, res) => {
     try {
-
-        // Logic to find the menu and update it
-        // e.g., await Menu.findOneAndUpdate({}, { breakfast, lunch, dinner }, { upsert: true });
-
-        res.status(200).json({
-            message: 'Menu Updated!',
-            success: true
-        });
+        const {category, name, price}=req.body;
+        const menuItem=await MenuItemModel.findOne({category, name});
+        if(menuItem){
+            return res.status(409).json({
+                message: `"${name}" already exists in the "${category}" category.`,
+                success:false
+            })
+        }
+        const status='Unavailable';
+        const MenuItem = new MenuItemModel({
+            category,
+            name,
+            status
+        })
+        await MenuItem.save();
+        res.status(201).json({
+            message:"Menu item added successfully.",
+            success:true
+        })
     } catch (error) {
-        console.error("Update Menu Error:", error);
+        console.error("Menu Error:", error);
         res.status(500).json({ message: 'Internal Server Error', success: false });
     }
 };
 
 const deleteMenuItem = async (req, res) => {
     try {
-
-        // Logic to find the menu and update it
-        // e.g., await Menu.findOneAndUpdate({}, { breakfast, lunch, dinner }, { upsert: true });
-
+        const {id}=req.params;
+        const deletedMenu = await MenuItemModel.findByIdAndDelete(id);
+        if (!deletedMenu) {
+            return res.status(404).json({
+                message:"No Menu item found with that id.",
+                success:false
+            });
+        }
+       
         res.status(200).json({
-            message: 'Menu Updated!',
+            message: 'Menu Deleted!',
             success: true
         });
     } catch (error) {
-        console.error("Update Menu Error:", error);
+        console.error("Delete Menu Error:", error);
         res.status(500).json({ message: 'Internal Server Error', success: false });
     }
 };
+
+const changeItemStatus = async(req,res)=>{
+    try{
+        const {id}=req.params;
+        const {status:newStatus}=req.body;
+        if (!['Available', 'Unavailable'].includes(newStatus)) 
+            {
+                return res.status(400).json({ //Bad request
+                    message: 'Invalid status.',
+                    success: false 
+                });
+            }
+        let item = await MenuItemModel.findById(id);
+        if (!item) {
+            return res.status(404).json({
+                message: "Menu item not found for this ID.",
+                success: false
+            });
+        }
+        item.status=newStatus;
+        await item.save();
+        return res.status(200).json({
+            message:`Status changed successfully to ${newStatus}.`,
+            success:true
+        });
+    }
+    catch(err){
+        console.error("Change Status Error:", err);
+        res.status(500).json({
+            message:"Internal Server Error. Could not change status.",
+            success:false,
+        })        
+    }
+}
 
 
 const viewAbsentees = async (req, res) => {
@@ -66,9 +118,69 @@ const viewOrders = async (req, res) => {
     }
 };
 
+const getMenuByCategory = async (req, res) => {
+  try {
+    const { category } = req.params; // e.g., /menu/breakfast
+    const items = await MenuItemModel.find({ category, status: 'Available' })
+      .sort({ createdAt: -1 });
+
+    if (items.length === 0) {
+      return res.status(200).json({
+        message: `No ${category} available today.`,
+        success: true,
+        items
+      });
+    }
+
+    res.status(200).json({
+      message: "Menu items viewed successfully.",
+      success: true,
+      items:items
+    });
+    } catch (error) {
+    console.error(`${category} menu items Error:`, error);
+    res.status(500).json({
+      message: `Could not retrieve ${category} menu items. Internal Server Error`,
+      success: false,
+    });
+  }
+};
+
+const getUnavailableItems = async (req, res) => {
+  try {
+    const { category } = req.params; 
+    const items = await MenuItemModel.find({ category, status: 'Unavailable' })
+      .sort({ createdAt: -1 });
+
+    if (items.length === 0) {
+      return res.status(200).json({
+        message: `All items are available in ${category} today.`,
+        success: true,
+        items:items
+      });
+    }
+
+    res.status(200).json({
+      message: "Menu items viewed successfully.",
+      success: true,
+      items:items
+    });
+    } catch (error) {
+    console.error(`${category} menu items Error:`, error);
+    res.status(500).json({
+      message: `Could not retrieve ${category} menu items. Internal Server Error`,
+      success: false,
+    });
+  }
+};
+
+
 module.exports = {
     viewAbsentees,
     viewOrders,
     addMenuItem,
-    deleteMenuItem
+    changeItemStatus,
+    deleteMenuItem,
+    getMenuByCategory,
+    getUnavailableItems
 };
