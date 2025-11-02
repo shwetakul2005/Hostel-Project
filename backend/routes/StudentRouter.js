@@ -6,7 +6,6 @@ const router=require('express').Router();
 
 router.post('/night-out', ensureAuthenticated, checkRole('student'), applicationVal, nightoutForm);
 // router.post('/mark-absentee', ensureAuthenticated, checkRole('student'), markAbsenteeInMess);
-router.post('/order-from-mess', ensureAuthenticated, checkRole('student'), orderFromMess);
 router.get('/view-applications', ensureAuthenticated, checkRole('student'), viewApplication );
 
 

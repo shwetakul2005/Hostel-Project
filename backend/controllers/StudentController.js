@@ -1,4 +1,6 @@
 const ApplicationModel = require("../models/Application");
+const MenuItemModel = require("../models/menu");
+const OrderModel = require("../models/orders");
 
 const nightoutForm = async(req,res)=>{
     try{
@@ -77,12 +79,6 @@ const viewApplication = async (req,res)=>{
     }
 }
 
-const orderFromMess = async (req, res) => {
-    res.json({ 
-        message: `User ${req.user.username} (Role: ${req.user.role}) ordered from mess.`, 
-        success: true 
-    });
-};
 
 const viewMenu=(req,res)=>{
     try {
@@ -105,7 +101,6 @@ const viewMenu=(req,res)=>{
 module.exports={
     nightoutForm,
     markAbsenteeInMess,
-    orderFromMess,
     viewMenu,
-    viewApplication
+    viewApplication,
 }

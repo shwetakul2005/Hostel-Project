@@ -10,6 +10,7 @@ const WardenRouter=require('./routes/WardenRouter.js');
 //Resource-based Routers
 const AnnouncementRouter=require('./routes/AnnouncementRouter.js');
 const MenuRouter=require('./routes/MenuRouter.js');
+const OrderRouter=require('./routes/OrderRouter.js');
 
 require('dotenv').config(); //to load the env variables
 require('./models/db.js');
@@ -27,6 +28,7 @@ app.use('/mess', MessRouter);
 app.use('/warden', WardenRouter);
 app.use('/api', AnnouncementRouter);
 app.use('/api', MenuRouter);
+app.use('/api', OrderRouter);
 
 
 app.listen(PORT, ()=>{

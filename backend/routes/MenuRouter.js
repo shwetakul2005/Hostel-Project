@@ -12,7 +12,7 @@ router.delete('/delete-item/:id', ensureAuthenticated, checkRole('mess'), delete
 
 
 router.get('/:category/get-available-items', ensureAuthenticated, checkRole(['mess','student','warden']), getMenuByCategory);
-router.get('/:category/get-unavailable-items', ensureAuthenticated, checkRole(['mess','student','warden']), getUnavailableItems);
+router.get('/:category/get-unavailable-items', ensureAuthenticated, checkRole('mess'), getUnavailableItems);
 
 
 module.exports=router;

@@ -1,4 +1,5 @@
 const MenuItemModel = require("../models/menu");
+const OrderModel = require("../models/orders");
 
 const addMenuItem = async (req, res) => {
     try {
@@ -14,7 +15,8 @@ const addMenuItem = async (req, res) => {
         const MenuItem = new MenuItemModel({
             category,
             name,
-            status
+            status,
+            price
         })
         await MenuItem.save();
         res.status(201).json({
@@ -100,23 +102,7 @@ const viewAbsentees = async (req, res) => {
             success: false 
         });
     }
-};
-
-const viewOrders = async (req, res) => {
-    try {
-        // Logic to find all orders
-        // const orders = await Order.find({ status: 'paid' }).populate('user', 'name username');
-
-        res.status(200).json({
-            message: 'Orders retrieved successfully.',
-            success: true,
-            orders: [] // You would send the 'orders' array here
-        });
-    } catch (error) {
-        console.error("View Orders Error:", error);
-        res.status(500).json({ message: 'Could not retrieve orders', success: false });
-    }
-};
+}
 
 const getMenuByCategory = async (req, res) => {
   try {
@@ -177,7 +163,6 @@ const getUnavailableItems = async (req, res) => {
 
 module.exports = {
     viewAbsentees,
-    viewOrders,
     addMenuItem,
     changeItemStatus,
     deleteMenuItem,
