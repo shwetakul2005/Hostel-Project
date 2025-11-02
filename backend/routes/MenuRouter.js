@@ -13,8 +13,6 @@ router.delete('/delete-item/:id', ensureAuthenticated, checkRole('mess'), delete
 
 router.get('/:category/get-available-items', ensureAuthenticated, checkRole(['mess','student','warden']), getMenuByCategory);
 router.get('/:category/get-unavailable-items', ensureAuthenticated, checkRole(['mess','student','warden']), getUnavailableItems);
-// // router.get('/get-lunch', ensureAuthenticated, checkRole(['mess','student','warden']),);
-// router.get('/get-snacks', ensureAuthenticated, checkRole(['mess','student','warden']), getSnacks);
-// router.get('/get-dinner', ensureAuthenticated, checkRole(['mess','student','warden']), getDinner);
+
 
 module.exports=router;
